@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "lib": ["es6"],
+    "allowJs": false,
+    "moduleResolution": "Node",
+    "outDir": "build",
+    "rootDir": ".",
+    "removeComments": false,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "isolatedModules": false,
+    "baseUrl": ".",
+  },
+  "include": ["**/*.ts", "swagger-configs.js"],
+  "exclude": ["node_modules", "build/**/*.test.ts", "build/**/*.spec.ts"]
+}
