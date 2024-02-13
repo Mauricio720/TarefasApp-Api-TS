@@ -5,13 +5,11 @@ test("should create user",async ()=>{
     name: 'any name',
     thumbnail:'any',
     email: 'any@any.com',
-    login: 'any',
     password:'1234'
   }
   const user=User.create({
     name:inputUser.name, 
     email:inputUser.email, 
-    login:inputUser.login, 
     thumbnail:inputUser.thumbnail,
     password:inputUser.password
   })
@@ -21,6 +19,5 @@ test("should create user",async ()=>{
   expect(user.getName()).toBe("Any Name");
   expect(user.getThumbnail()).toBe("any");
   expect(user.getEmail()).toBe("any@any.com");
-  expect(user.getLogin()).toBe("any");
   expect(user.getEncryptedPassword()).toBeDefined();
 })
