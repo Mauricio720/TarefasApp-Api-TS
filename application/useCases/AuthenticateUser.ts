@@ -16,9 +16,8 @@ export class AuthenticateUser{
       throw new AuthenticateInvalid()
     }
     const isValidPassword = this.encrypt.check(input.password,user.getEncryptedPassword())
+    
     if(!isValidPassword){
-      console.log(input.password,user.getEncryptedPassword());
-      
       throw new AuthenticateInvalid()  
     }
     const token = this.authenticator.generateToken({

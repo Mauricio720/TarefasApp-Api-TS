@@ -43,4 +43,38 @@ describe("Auth User", () => {
     expect(token).toBeDefined()
     expect(user.email).toBe("any@any.com")
   })
+
+  test("should throw error invalid password", async () => {
+    const inputCreateUser={
+      name: 'any name',
+      thumbnail:'any',
+      email: 'any@any.com',
+      password:'1234'
+    }
+    const createUser=new CreateUser(userRepository)
+    await createUser.execute({
+      name: inputCreateUser.name,
+      email: inputCreateUser.email,
+      password: inputCreateUser.password  
+    })
+
+    expect(async ()=>{
+      const authenticate=new AuthenticateUser(userRepository,encrypt,authenticator)
+      await authenticate.execute({
+        email: "wrongEmail",
+        password: '1234'
+      })
+    }).rejects.toThrow(AuthenticateInvalid)
+
+    encrypt={
+      check:jest.fn().mockReturnValue(false)
+    }
+    expect(async ()=>{
+      const authenticate=new AuthenticateUser(userRepository,encrypt,authenticator)
+      await authenticate.execute({
+        email: "any@any.com",
+        password: 'wrongPassword'
+      })
+    }).rejects.toThrow(AuthenticateInvalid)
+  })
 })
