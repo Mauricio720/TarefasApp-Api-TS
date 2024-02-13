@@ -10,7 +10,7 @@ test("should create password", () => {
   expect(password.getValue()).toBe("any_password");
 })
 
-test("should check password", () => {
+test("should get password", () => {
   const password = new Password("any1234");
   expect(password.getValue()).toBe("any1234");
 })
