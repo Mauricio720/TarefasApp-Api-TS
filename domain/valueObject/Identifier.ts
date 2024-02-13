@@ -4,9 +4,10 @@ import { Identifier } from "application/security/Identifier";
 export class Id {
     private value: string;
     constructor(
-      private readonly identifier: Identifier
+      private readonly identifier: Identifier,
+      id? : string
     ){
-      this.value = this.identifier.createId();
+      this.value = id ? id : this.identifier.createId();
     }
 
     getId(): string{

@@ -6,7 +6,7 @@ import { IdentifierUUID } from 'infra/security/IdentifierUUID';
 
 export namespace User{
   export type Props={
-    id?: Id
+    id?: Id;
     name: string;
     email: Email;
     login: string;
@@ -37,7 +37,7 @@ export class User{
   constructor(
     props: User.Props
   ){
-    this.id = props.id || new Id(new IdentifierUUID());
+    this.id = props.id;
     this.name = props.name;
     this.email = props.email;
     this.login = props.login;
