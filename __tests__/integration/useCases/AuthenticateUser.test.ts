@@ -3,7 +3,8 @@ import { AuthenticateGenerateToken } from "application/security/Authenticator";
 import { CheckPassword } from "application/security/Encrypt";
 import { UserRepositoryMemory } from "infra/repository/memory/UserRepositoryMemory";
 import { CreateUser } from 'application/useCases/CreateUser';
-import { AuthenticateUser } from 'application/security/AuthenticateUser';
+import { AuthenticateUser } from 'application/useCases/AuthenticateUser';
+import { AuthenticateInvalid } from "domain/errors/AuthenticateInvalid";
 
 describe("Auth User", () => {
   let userRepository:FindUserByEmailUserRepository & CreateUserRepository;
@@ -28,23 +29,18 @@ describe("Auth User", () => {
       email: 'any@any.com',
       password:'1234'
     }
-
     const createUser=new CreateUser(userRepository)
     await createUser.execute({
       name: inputCreateUser.name,
       email: inputCreateUser.email,
       password: inputCreateUser.password  
     })
-   
-
     const authenticate=new AuthenticateUser(userRepository,encrypt,authenticator)
     const {token,user}=await authenticate.execute({
       email: inputCreateUser.email,
       password: inputCreateUser.password
     })
-
     expect(token).toBeDefined()
     expect(user.email).toBe("any@any.com")
-    
   })
 })

@@ -10,9 +10,7 @@ export class CreateUser{
       password: input.password,
       thumbnail: input.thumbnail || undefined
     });
-
     await this.userRepository.save(user);
-
     return user.getId();
   }
 }

@@ -1,7 +1,7 @@
+import { AuthenticateGenerateToken } from 'application/security/Authenticator';
+import { CheckPassword } from 'application/security/Encrypt';
 import { AuthenticateUserRepository } from "application/repository/UserRepository";
-import { CheckPassword } from "./Encrypt";
 import { AuthenticateInvalid } from "domain/errors/AuthenticateInvalid";
-import { AuthenticateGenerateToken } from "./Authenticator";
 
 export class AuthenticateUser{
   constructor(
@@ -17,13 +17,14 @@ export class AuthenticateUser{
     }
     const isValidPassword = this.encrypt.check(input.password,user.getEncryptedPassword())
     if(!isValidPassword){
+      console.log(input.password,user.getEncryptedPassword());
+      
       throw new AuthenticateInvalid()  
     }
     const token = this.authenticator.generateToken({
       id: user.getId(),
       email: user.getEmail()
     })
-    
     return {
       token,
       user:{

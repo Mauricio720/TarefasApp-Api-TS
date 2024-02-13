@@ -1,4 +1,4 @@
-import { AuthenticateUser } from 'application/security/AuthenticateUser';
+import { AuthenticateUser } from 'application/useCases/AuthenticateUser';
 import { CreateUser } from 'application/useCases/CreateUser';
 import { Request,Response } from 'express';
 import { UserRepositoryMemory } from 'infra/repository/memory/UserRepositoryMemory';
