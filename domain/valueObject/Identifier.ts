@@ -1,22 +1,16 @@
-import { randomUUID } from "crypto";
+import { Identifier } from "application/security/Identifier";
 
-export interface IdentifierAdapter {
-  createId(): string
-}
 
-export class IdentifierUUID implements IdentifierAdapter {
-  createId(): string {
-    return randomUUID();
-  }
- }
-
-export class Identifier {
+export class Id {
+    private value: string;
     constructor(
-      private readonly identifier: IdentifierAdapter
-    ){}
+      private readonly identifier: Identifier
+    ){
+      this.value = this.identifier.createId();
+    }
 
-    getIdentifier(): string{
-      return this.identifier.createId()
+    getId(): string{
+      return this.value;
     }
 }
 
