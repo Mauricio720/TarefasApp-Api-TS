@@ -2,8 +2,7 @@ import { User } from "domain/entities/User";
 
 test("should create user",async ()=>{
   const inputUser={
-    id:'any',
-    name: 'any',
+    name: 'any name',
     thumbnail:'any',
     email: 'any@any.com',
     login: 'any',
@@ -13,13 +12,15 @@ test("should create user",async ()=>{
     name:inputUser.name, 
     email:inputUser.email, 
     login:inputUser.login, 
+    thumbnail:inputUser.thumbnail,
     password:inputUser.password
   })
   
-  expect(user.id).toBe(1);
-  expect(user.name).toBe("any");
-  expect(user.thumbnail).toBe("any");
-  expect(user.email).toBe("any@any.com");
-  expect(user.login).toBe("any");
-  expect(user.password).toBe("1234")
+  
+  expect(user.getId()).toBeDefined();
+  expect(user.getName()).toBe("Any Name");
+  expect(user.getThumbnail()).toBe("any");
+  expect(user.getEmail()).toBe("any@any.com");
+  expect(user.getLogin()).toBe("any");
+  expect(user.getEncryptedPassword()).toBeDefined();
 })
