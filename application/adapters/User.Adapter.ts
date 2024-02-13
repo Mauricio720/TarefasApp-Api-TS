@@ -8,7 +8,6 @@ export type UserAdapterInput = {
   id: string;
   name: string;
   email: string;
-  login: string;
   password: string;
   thumbnail?: string;
   createdAt?: Date;
@@ -21,7 +20,6 @@ export class UserAdapter {
         id: new Id(new IdentifierUUID() ,userInput.id),
         name: userInput.name,
         email: new Email(userInput.email),
-        login: userInput.login,
         password: new Password(userInput.password),
         thumbnail: userInput.thumbnail,
         createdAt: userInput.createdAt,

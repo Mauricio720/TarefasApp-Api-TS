@@ -9,7 +9,6 @@ export namespace User{
     id?: Id;
     name: string;
     email: Email;
-    login: string;
     password: Password;
     thumbnail?: string,
     createdAt?: Date
@@ -19,7 +18,6 @@ export namespace User{
   export type CreateUserProps = {
     name: string;
     email: string;
-    login: string;
     password: string;
     thumbnail?: string,
   }
@@ -28,7 +26,6 @@ export class User{
   private id: Id;
   private name: string;
   private email: Email;
-  private login: string;
   private password: Password;
   private thumbnail?: string;
   private createdAt: Date;
@@ -40,7 +37,6 @@ export class User{
     this.id = props.id;
     this.name = props.name;
     this.email = props.email;
-    this.login = props.login;
     this.thumbnail = props.thumbnail
     this.password = props.password;
     this.createdAt = props.createdAt || new Date();
@@ -54,7 +50,6 @@ export class User{
       id: new Id(new IdentifierUUID()),
       name: props.name,
       email: new Email(props.email),
-      login: props.login,
       password: new Password(props.password,new BcryptEncrypt()),
       thumbnail: props.thumbnail,
       createdAt: new Date(),
@@ -76,10 +71,6 @@ export class User{
 
   getEmail(): string {
     return this.email.getValue()
-  }
-
-  getLogin(): string {
-    return this.login
   }
 
   getThumbnail(): string {
