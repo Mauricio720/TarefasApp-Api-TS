@@ -1,11 +1,11 @@
 import { AuthenticateGenerateToken } from 'application/security/Authenticator';
 import { CheckPassword } from 'application/security/Encrypt';
-import { AuthenticateUserRepository } from "application/repository/UserRepository";
 import { AuthenticateInvalid } from "domain/errors/AuthenticateInvalid";
+import { UserRepository } from 'domain/repository/UserRepository';
 
 export class AuthenticateUser{
   constructor(
-    private readonly userRepository:AuthenticateUserRepository,
+    private readonly userRepository:UserRepository,
     private readonly encrypt:CheckPassword,
     private readonly authenticator:AuthenticateGenerateToken
   ){}
