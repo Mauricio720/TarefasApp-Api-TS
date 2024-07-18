@@ -1,25 +1,24 @@
-import { CreateUserRepository, FindUserByEmailUserRepository } from "application/repository/UserRepository";
 import { AuthenticateGenerateToken } from "application/security/Authenticator";
 import { CheckPassword } from "application/security/Encrypt";
-import { UserRepositoryMemory } from "infra/repository/memory/UserRepositoryMemory";
 import { CreateUser } from 'application/useCases/CreateUser';
 import { AuthenticateUser } from 'application/useCases/AuthenticateUser';
 import { AuthenticateInvalid } from "domain/errors/AuthenticateInvalid";
+import { UserRepository } from "domain/repository/UserRepository";
+import { UserRepositoryMongoDB } from "infra/database/repository/UserRepositoryMongoDB";
 
 describe("Auth User", () => {
-  let userRepository:FindUserByEmailUserRepository & CreateUserRepository;
+  let userRepository:UserRepository;
   let encrypt:CheckPassword
   let authenticator: AuthenticateGenerateToken
 
   beforeEach(() => {
-    userRepository = new UserRepositoryMemory()
+    userRepository = new UserRepositoryMongoDB()
     encrypt={
       check:jest.fn().mockReturnValue(true)
     }
     authenticator={
       generateToken:jest.fn().mockReturnValue('any_token')
     }
-    
   })
 
   test("should authenticate user", async () => {

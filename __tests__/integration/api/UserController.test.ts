@@ -1,7 +1,7 @@
-import { UserRepository } from "application/repository/UserRepository"
+import { UserRepository } from "domain/repository/UserRepository"
 import axios from "axios";
-import { UserRepositoryMemory } from "infra/repository/memory/UserRepositoryMemory";
 import dotenv from 'dotenv'
+import { UserRepositoryMongoDB } from "infra/database/repository/UserRepositoryMongoDB";
 
 dotenv.config();
 
@@ -9,7 +9,7 @@ describe("User Controller", () => {
   let userRepository:UserRepository;
 
   beforeEach(() => {
-    userRepository = new UserRepositoryMemory()
+    userRepository = new UserRepositoryMongoDB()
   })
 
   test("should create user", async () => {
@@ -41,7 +41,6 @@ describe("User Controller", () => {
       email: inputCreateUser.email,
       password: inputCreateUser.password
     })
-    console.log(responseAuth.data);
     
     expect(responseAuth.status).toBe(200);
     expect(responseAuth.data.token).toBeDefined()
@@ -49,7 +48,7 @@ describe("User Controller", () => {
   })
 
   afterEach(() => {
-    userRepository = new UserRepositoryMemory()
+    userRepository = new UserRepositoryMongoDB()
   })
     
 })

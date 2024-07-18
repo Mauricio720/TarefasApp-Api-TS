@@ -14,7 +14,6 @@ test("should create user",async ()=>{
     password:inputUser.password
   })
   
-  
   expect(user.getId()).toBeDefined();
   expect(user.getName()).toBe("Any Name");
   expect(user.getThumbnail()).toBe("any");

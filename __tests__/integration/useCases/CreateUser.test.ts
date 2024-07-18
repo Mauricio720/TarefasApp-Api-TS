@@ -1,13 +1,12 @@
-import { FindByIdUserRepository } from './../../../application/repository/UserRepository';
-import { CreateUserRepository, UserRepository } from "application/repository/UserRepository";
 import { CreateUser } from "application/useCases/CreateUser";
-import { UserRepositoryMemory } from "infra/repository/memory/UserRepositoryMemory";
+import { UserRepository } from "domain/repository/UserRepository";
+import { UserRepositoryMongoDB } from "infra/database/repository/UserRepositoryMongoDB";
 
 describe("Create User", () => {
-  let userRepository:CreateUserRepository & FindByIdUserRepository;
+  let userRepository:UserRepository;
 
   beforeEach(() => {
-    userRepository = new UserRepositoryMemory()
+    userRepository = new UserRepositoryMongoDB()
   })
   
   test("should create user", async () => {
