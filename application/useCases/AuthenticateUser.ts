@@ -11,25 +11,29 @@ export class AuthenticateUser{
   ){}
 
   async execute(input:InputAuthenticateUser):Promise<OutputAuthenticateUser>{
-    const user = await this.userRepository.findByEmail(input.email)
-    if(!user){
-      throw new AuthenticateInvalid()
-    }
-    const isValidPassword = this.encrypt.check(input.password,user.getEncryptedPassword())
-    
-    if(!isValidPassword){
-      throw new AuthenticateInvalid()  
-    }
-    const token = this.authenticator.generateToken({
-      id: user.getId(),
-      email: user.getEmail()
-    })
-    return {
-      token,
-      user:{
+    try{
+      const user = await this.userRepository.findByEmail(input.email)
+      if(!user){
+        throw new AuthenticateInvalid()
+      }
+      const isValidPassword = this.encrypt.check(input.password,user.getEncryptedPassword())
+      if(!isValidPassword){
+        throw new AuthenticateInvalid()  
+      }
+      const token = this.authenticator.generateToken({
         id: user.getId(),
         email: user.getEmail()
+      })
+      return {
+        token,
+        user:{
+          id: user.getId(),
+          email: user.getEmail()
+        }
       }
+
+    }catch(error){
+      throw new AuthenticateInvalid()
     }
   }
 }
