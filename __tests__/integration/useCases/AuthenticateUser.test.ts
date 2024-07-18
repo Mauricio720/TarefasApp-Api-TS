@@ -78,7 +78,7 @@ describe("Auth User", () => {
     }).rejects.toThrow(AuthenticateInvalid)
   })
 
-  afterAll(() => {
-    deleteData()
+  afterAll(async () => {
+    await deleteData()
   })
 })

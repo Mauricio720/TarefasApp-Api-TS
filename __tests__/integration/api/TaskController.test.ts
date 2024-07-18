@@ -35,7 +35,7 @@ describe("Task Controller", () => {
     taskRepository = new TaskRepositoryMongoDB()
   })
 
-  afterAll(() => {
-    deleteData()
+  afterAll(async () => {
+    await deleteData()
   })
 })

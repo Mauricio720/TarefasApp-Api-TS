@@ -4,6 +4,7 @@ import { CreateTask, InputCreateTask } from 'application/useCases/CreateTask';
 import { CreateUser } from 'application/useCases/CreateUser';
 import { UserRepositoryMongoDB } from 'infra/database/repository/UserRepositoryMongoDB';
 import { deleteData } from "infra/database/scripts/deleteData";
+import { connection } from 'infra/database/MongoDB';
 
 describe("Create Task", () => {
   let taskRepository:TaskRepository;
@@ -34,11 +35,12 @@ describe("Create Task", () => {
     }
     const createTask=new CreateTask(taskRepository)
     const id=await createTask.execute(inputCreateTask)
+    
     const task = await taskRepository.findById(id)
     expect(task.getId()).toBe(id)
   })
 
-  afterAll(() => {
-    deleteData()
+  afterAll(async () => {
+    await deleteData()
   })
 })

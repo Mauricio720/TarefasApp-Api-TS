@@ -52,8 +52,8 @@ describe("User Controller", () => {
     userRepository = new UserRepositoryMongoDB()
   })
 
-  afterAll(() => {
-    deleteData()
+  afterAll(async () => {
+    await deleteData()
   })
     
 })

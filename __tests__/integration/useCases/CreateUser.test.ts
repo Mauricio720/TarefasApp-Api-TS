@@ -24,7 +24,7 @@ describe("Create User", () => {
     expect(user.getId()).toBe(id)
   })
 
-  afterAll(() => {
-    deleteData()
+  afterAll(async () => {
+    await deleteData()
   })
 })
