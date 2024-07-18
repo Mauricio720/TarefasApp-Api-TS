@@ -1,5 +1,5 @@
 import { UserAdapter } from 'application/adapters/User.Adapter';
-import { UserRepository } from 'application/repository/UserRepository';
+import { UserRepository } from 'domain/repository/UserRepository';
 import { User } from 'domain/entities/User';
 export class UserRepositoryMemory implements UserRepository {
   private users:User[] = [];

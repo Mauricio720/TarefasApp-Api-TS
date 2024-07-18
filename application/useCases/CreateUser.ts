@@ -1,8 +1,8 @@
-import { CreateUserRepository } from "application/repository/UserRepository";
 import { User } from "domain/entities/User";
+import { UserRepository } from "domain/repository/UserRepository";
 
 export class CreateUser{
-  constructor(private readonly userRepository : CreateUserRepository){}
+  constructor(private readonly userRepository : UserRepository){}
   async execute(input: InputCreateUser){
     const user = User.create({
       name: input.name,
