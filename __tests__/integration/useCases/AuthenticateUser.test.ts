@@ -5,6 +5,7 @@ import { AuthenticateUser } from 'application/useCases/AuthenticateUser';
 import { AuthenticateInvalid } from "domain/errors/AuthenticateInvalid";
 import { UserRepository } from "domain/repository/UserRepository";
 import { UserRepositoryMongoDB } from "infra/database/repository/UserRepositoryMongoDB";
+import { deleteData } from "infra/database/scripts/deleteData";
 
 describe("Auth User", () => {
   let userRepository:UserRepository;
@@ -75,5 +76,9 @@ describe("Auth User", () => {
         password: 'wrongPassword'
       })
     }).rejects.toThrow(AuthenticateInvalid)
+  })
+
+  afterAll(() => {
+    deleteData()
   })
 })

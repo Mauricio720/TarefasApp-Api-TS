@@ -2,6 +2,7 @@ import axios from "axios";
 import { TaskRepository } from "domain/repository/TaskRepository";
 import dotenv from 'dotenv'
 import { TaskRepositoryMongoDB } from "infra/database/repository/TaskRepositoryMongoDB";
+import { deleteData } from "infra/database/scripts/deleteData";
 
 dotenv.config();
 
@@ -32,5 +33,9 @@ describe("Task Controller", () => {
 
   afterEach(() => {
     taskRepository = new TaskRepositoryMongoDB()
+  })
+
+  afterAll(() => {
+    deleteData()
   })
 })

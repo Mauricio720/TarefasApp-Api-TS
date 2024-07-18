@@ -1,6 +1,7 @@
 import { CreateUser } from "application/useCases/CreateUser";
 import { UserRepository } from "domain/repository/UserRepository";
 import { UserRepositoryMongoDB } from "infra/database/repository/UserRepositoryMongoDB";
+import { deleteData } from "infra/database/scripts/deleteData";
 
 describe("Create User", () => {
   let userRepository:UserRepository;
@@ -21,5 +22,9 @@ describe("Create User", () => {
     
     const user = await userRepository.findById(id)
     expect(user.getId()).toBe(id)
+  })
+
+  afterAll(() => {
+    deleteData()
   })
 })

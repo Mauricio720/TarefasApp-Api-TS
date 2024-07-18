@@ -2,6 +2,7 @@ import { UserRepository } from "domain/repository/UserRepository"
 import axios from "axios";
 import dotenv from 'dotenv'
 import { UserRepositoryMongoDB } from "infra/database/repository/UserRepositoryMongoDB";
+import { deleteData } from "infra/database/scripts/deleteData";
 
 dotenv.config();
 
@@ -49,6 +50,10 @@ describe("User Controller", () => {
 
   afterEach(() => {
     userRepository = new UserRepositoryMongoDB()
+  })
+
+  afterAll(() => {
+    deleteData()
   })
     
 })

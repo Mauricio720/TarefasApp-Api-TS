@@ -3,6 +3,7 @@ import { TaskRepository } from './../../../domain/repository/TaskRepository';
 import { CreateTask, InputCreateTask } from 'application/useCases/CreateTask';
 import { CreateUser } from 'application/useCases/CreateUser';
 import { UserRepositoryMongoDB } from 'infra/database/repository/UserRepositoryMongoDB';
+import { deleteData } from "infra/database/scripts/deleteData";
 
 describe("Create Task", () => {
   let taskRepository:TaskRepository;
@@ -20,6 +21,7 @@ describe("Create Task", () => {
     const userRepository=new UserRepositoryMongoDB()
     const createUser=new CreateUser(userRepository)
     const idUser=await createUser.execute(inputCreateUser)
+
     const inputCreateTask:InputCreateTask={
       title: 'any title',
       start: 'any start',
@@ -36,4 +38,7 @@ describe("Create Task", () => {
     expect(task.getId()).toBe(id)
   })
 
+  afterAll(() => {
+    deleteData()
+  })
 })
