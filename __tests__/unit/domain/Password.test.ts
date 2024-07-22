@@ -1,4 +1,4 @@
-import { Encrypt, EncryptPassword } from "application/security/Encrypt";
+import { EncryptPassword } from "application/security/Encrypt";
 import { Password } from "domain/valueObject/Password";
 
 const encryptPass: EncryptPassword = {

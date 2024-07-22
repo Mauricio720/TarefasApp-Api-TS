@@ -1,6 +1,6 @@
-import { connection } from "../MongoDB";
+import { DatabaseConnectionNoSQL } from './../DatabaseConnectionNoSQL';
 
-export async function deleteData() {
-  await connection.collection("users").deleteMany()
-  await connection.collection("tasks").deleteMany()
+export async function deleteData(databaseConnectionNoSQL: DatabaseConnectionNoSQL) {
+  await databaseConnectionNoSQL.getDb().collection("users").deleteMany()
+  await databaseConnectionNoSQL.getDb().collection("tasks").deleteMany()
 }

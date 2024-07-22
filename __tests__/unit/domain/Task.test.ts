@@ -20,6 +20,4 @@ test("should create task entitie", () => {
   expect(task.getImportant()).toBe("important")
   expect(task.getDescription()).toBe("any description")
   expect(task.getIcon()).toBe("any icon")
-
-  
 })

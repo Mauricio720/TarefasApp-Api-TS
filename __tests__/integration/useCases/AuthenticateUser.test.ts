@@ -6,14 +6,18 @@ import { AuthenticateInvalid } from "domain/errors/AuthenticateInvalid";
 import { UserRepository } from "domain/repository/UserRepository";
 import { UserRepositoryMongoDB } from "infra/database/repository/UserRepositoryMongoDB";
 import { deleteData } from "infra/database/scripts/deleteData";
+import MongoDBAdapter from "infra/database/MongoDB";
 
 describe("Auth User", () => {
   let userRepository:UserRepository;
   let encrypt:CheckPassword
   let authenticator: AuthenticateGenerateToken
-
+  let mongoDBAdapter = new MongoDBAdapter("test");
+  beforeAll(async () => {
+    await mongoDBAdapter.connect();
+  })
   beforeEach(() => {
-    userRepository = new UserRepositoryMongoDB()
+    userRepository = new UserRepositoryMongoDB(mongoDBAdapter)
     encrypt={
       check:jest.fn().mockReturnValue(true)
     }
@@ -79,6 +83,7 @@ describe("Auth User", () => {
   })
 
   afterAll(async () => {
-    await deleteData()
+    await deleteData(mongoDBAdapter)
+    await mongoDBAdapter.disconnect()
   })
 })

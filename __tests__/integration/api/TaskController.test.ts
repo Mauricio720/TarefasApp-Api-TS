@@ -1,6 +1,7 @@
 import axios from "axios";
 import { TaskRepository } from "domain/repository/TaskRepository";
 import dotenv from 'dotenv'
+import MongoDBAdapter from "infra/database/MongoDB";
 import { TaskRepositoryMongoDB } from "infra/database/repository/TaskRepositoryMongoDB";
 import { deleteData } from "infra/database/scripts/deleteData";
 
@@ -8,9 +9,12 @@ dotenv.config();
 
 describe("Task Controller", () => {
   let taskRepository:TaskRepository;
-
+  let mongoDBAdapter = new MongoDBAdapter("test");
+  beforeAll(async () => {
+    await mongoDBAdapter.connect();
+  })
   beforeEach(() => {
-    taskRepository = new TaskRepositoryMongoDB()
+    taskRepository = new TaskRepositoryMongoDB(mongoDBAdapter)
   })
 
   test("should create task", async () => {
@@ -25,17 +29,16 @@ describe("Task Controller", () => {
       userId: 'any userId'
     }
     
-    const response = await axios.post(`http://localhost:${process.env.PORT}/tasks`, inputCreateTask)    
-    
+    const response = await axios.post(`http://localhost:${process.env.PORT}/tasks`, inputCreateTask)        
     expect(response.status).toBe(200);
     expect(response.data.id).toBeDefined()
   })
 
-  afterEach(() => {
-    taskRepository = new TaskRepositoryMongoDB()
+  afterEach(async () => {
+    await deleteData(mongoDBAdapter)
   })
 
   afterAll(async () => {
-    await deleteData()
+    await mongoDBAdapter.disconnect()
   })
 })

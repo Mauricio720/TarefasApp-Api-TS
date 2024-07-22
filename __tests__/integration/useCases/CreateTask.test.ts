@@ -4,12 +4,16 @@ import { CreateTask, InputCreateTask } from 'application/useCases/CreateTask';
 import { CreateUser } from 'application/useCases/CreateUser';
 import { UserRepositoryMongoDB } from 'infra/database/repository/UserRepositoryMongoDB';
 import { deleteData } from "infra/database/scripts/deleteData";
-import { connection } from 'infra/database/MongoDB';
+import MongoDBAdapter from 'infra/database/MongoDB';
 
 describe("Create Task", () => {
   let taskRepository:TaskRepository;
+  let mongoDBAdapter = new MongoDBAdapter('test');
+  beforeAll(async () => {
+    await mongoDBAdapter.connect();
+  })
   beforeEach(() => {
-    taskRepository = new TaskRepositoryMongoDB()
+    taskRepository = new TaskRepositoryMongoDB(mongoDBAdapter)
   })
 
   test("should create task", async () => {
@@ -19,7 +23,7 @@ describe("Create Task", () => {
       email: 'any@any.com',
       password:'1234'
     }
-    const userRepository=new UserRepositoryMongoDB()
+    const userRepository=new UserRepositoryMongoDB(mongoDBAdapter)
     const createUser=new CreateUser(userRepository)
     const idUser=await createUser.execute(inputCreateUser)
 
@@ -41,6 +45,7 @@ describe("Create Task", () => {
   })
 
   afterAll(async () => {
-    await deleteData()
+    await deleteData(mongoDBAdapter)
+    await mongoDBAdapter.disconnect()
   })
 })

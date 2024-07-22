@@ -3,14 +3,18 @@ import axios from "axios";
 import dotenv from 'dotenv'
 import { UserRepositoryMongoDB } from "infra/database/repository/UserRepositoryMongoDB";
 import { deleteData } from "infra/database/scripts/deleteData";
+import MongoDBAdapter from "infra/database/MongoDB";
 
 dotenv.config();
 
 describe("User Controller", () => {
   let userRepository:UserRepository;
-
+  let mongoDBAdapter = new MongoDBAdapter("test");
+  beforeAll(async () => {
+    await mongoDBAdapter.connect();
+  })
   beforeEach(() => {
-    userRepository = new UserRepositoryMongoDB()
+    userRepository = new UserRepositoryMongoDB(mongoDBAdapter)
   })
 
   test("should create user", async () => {
@@ -48,12 +52,9 @@ describe("User Controller", () => {
     expect(responseAuth.data.user.email).toBe(inputCreateUser.email)
   })
 
-  afterEach(() => {
-    userRepository = new UserRepositoryMongoDB()
-  })
-
   afterAll(async () => {
-    await deleteData()
+    await deleteData(mongoDBAdapter)
+    await mongoDBAdapter.disconnect()
   })
     
 })

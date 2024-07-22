@@ -1,13 +1,17 @@
 import { CreateUser } from "application/useCases/CreateUser";
 import { UserRepository } from "domain/repository/UserRepository";
+import MongoDBAdapter from "infra/database/MongoDB";
 import { UserRepositoryMongoDB } from "infra/database/repository/UserRepositoryMongoDB";
 import { deleteData } from "infra/database/scripts/deleteData";
 
 describe("Create User", () => {
   let userRepository:UserRepository;
-
+  let mongoDBAdapter = new MongoDBAdapter("test");
+  beforeAll(async () => {
+    await mongoDBAdapter.connect();
+  })
   beforeEach(() => {
-    userRepository = new UserRepositoryMongoDB()
+    userRepository = new UserRepositoryMongoDB(mongoDBAdapter)
   })
   
   test("should create user", async () => {
@@ -25,6 +29,7 @@ describe("Create User", () => {
   })
 
   afterAll(async () => {
-    await deleteData()
+    await deleteData(mongoDBAdapter)
+    await mongoDBAdapter.disconnect()
   })
 })
