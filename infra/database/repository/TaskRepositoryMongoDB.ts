@@ -1,12 +1,14 @@
 import { Task } from "domain/entities/Task";
 import { TaskRepository } from "domain/repository/TaskRepository";
 import { Id } from "domain/valueObject/Identifier";
-import { connection } from "infra/database/MongoDB";
 import { TaskCollection } from "../collections/TaskCollection";
+import { DatabaseConnectionNoSQL } from "../DatabaseConnectionNoSQL";
 
 export class TaskRepositoryMongoDB implements TaskRepository {
-  private collection=connection.collection<TaskCollection>("tasks")
-
+  private collection;
+  constructor(private dbAdapter: DatabaseConnectionNoSQL) {
+    this.collection = dbAdapter.getDb().collection<TaskCollection>("tasks")
+  }
   async findById(id: string): Promise<Task> {
     const response = await this.collection.findOne({ id });
     if (!response) {

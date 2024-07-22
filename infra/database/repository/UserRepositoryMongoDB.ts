@@ -1,10 +1,10 @@
 
 import { User } from "domain/entities/User";
 import { Id } from "domain/valueObject/Identifier";
-import { connection } from "infra/database/MongoDB";
 import { UserRepository } from 'domain/repository/UserRepository';
 import { Email } from "domain/valueObject/Email";
 import { Password } from "domain/valueObject/Password";
+import { DatabaseConnectionNoSQL } from "../DatabaseConnectionNoSQL";
 type UserCollection={
   id: string;
   name: string;
@@ -15,8 +15,11 @@ type UserCollection={
   updatedAt?: Date
 }
 export class UserRepositoryMongoDB implements UserRepository {
-  private collection=connection.collection<UserCollection>("users")
+  private collection
 
+  constructor(private dbAdapter: DatabaseConnectionNoSQL) {
+    this.collection = dbAdapter.getDb().collection<UserCollection>("users");
+  }
   async findById(id: string): Promise<User> {
     const response = await this.collection.findOne({ id });
     if (!response) {
