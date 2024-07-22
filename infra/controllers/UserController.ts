@@ -1,11 +1,13 @@
 import { AuthenticateUser } from 'application/useCases/AuthenticateUser';
 import { CreateUser } from 'application/useCases/CreateUser';
 import { Request,Response } from 'express';
+import MongoDBAdapter from 'infra/database/MongoDB';
 import { UserRepositoryMongoDB } from 'infra/database/repository/UserRepositoryMongoDB';
 import { BcryptEncrypt } from 'infra/security/BcryptEncrypt';
 import { JWTAuthenticator } from 'infra/security/JWTAuthenticator';
 
-const userRepository=new UserRepositoryMongoDB()
+let mongoDBAdapter = new MongoDBAdapter()
+const userRepository=new UserRepositoryMongoDB(mongoDBAdapter)
 const encrypt=new BcryptEncrypt();
 const authenticator = new JWTAuthenticator();
 
