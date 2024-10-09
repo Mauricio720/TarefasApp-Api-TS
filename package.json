@@ -21,6 +21,9 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.8.0",
     "nodemon": "^3.0.3",
+    "passport": "^0.7.0",
+    "passport-facebook": "^3.0.0",
+    "passport-jwt": "^4.0.1",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.8",
     "tsconfig-paths": "^4.2.0"
