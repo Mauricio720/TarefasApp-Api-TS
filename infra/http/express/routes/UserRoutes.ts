@@ -9,4 +9,8 @@ router.post("/auth", async (req:Request, res:Response) => {
   return await UserController.authenticate(req, res)
 })
 
+router.get("/auth/facebook", async (req:Request, res:Response) => {
+  return await UserController.authenticateFacebook(req, res)
+})
+
 export default router

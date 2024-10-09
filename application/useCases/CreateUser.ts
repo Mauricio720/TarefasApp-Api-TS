@@ -7,7 +7,7 @@ export class CreateUser{
     const user = User.create({
       name: input.name,
       email: input.email,
-      password: input.password,
+      password: input.password ?? '',
       thumbnail: input.thumbnail || undefined
     });
     await this.userRepository.save(user);
@@ -18,7 +18,7 @@ export class CreateUser{
 export type InputCreateUser={
   name: string;
   email: string;
-  password: string;
+  password?: string;
   thumbnail?: string;
 }
 
