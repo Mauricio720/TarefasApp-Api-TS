@@ -7,6 +7,9 @@
     "test": "jest",
     "test-watch": "jest --watchAll",
     "dev": "nodemon",
+    "docker-dev-up": "docker compose up --build",
+    "docker-dev-down": "docker compose down",
+    "start": "node build/index.js",
     "build": "rm -rf ./build && tsc && tsc-alias -p tsconfig.json"
   },
   "author": "",

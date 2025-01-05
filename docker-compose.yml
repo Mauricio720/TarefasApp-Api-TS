@@ -1,0 +1,40 @@
+services:
+  mongo-task:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    restart: always
+    networks:
+      - app-task-network
+    volumes:
+      - mongodb-task-volumes:/data/db
+
+  api:
+    container_name: task-api
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    networks:
+      - app-task-network
+    ports:
+      - "3333:3333"
+    depends_on:
+      - mongo-task
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - .:/api
+      - /api/node_modules
+    command: ["yarn", "dev"]
+    environment:
+      - NODE_ENV=development
+      
+networks:
+  app-task-network:
+    driver: bridge
+    name: app-task-network
+
+volumes:
+  app-task-volumes:
+  mongodb-task-volumes:
